@@ -9,6 +9,7 @@ Example:
 import sys
 import fire
 import questionary
+import os.path
 from pathlib import Path
 
 from qualifier.utils.fileio import load_csv,save_csv
@@ -31,8 +32,11 @@ def load_bank_data():
         The bank data from the data rate sheet CSV file.
     """
 
-    csvpath = questionary.text("Enter a file path to a rate-sheet (.csv):").ask()
+    #csvpath = questionary.text("Enter a file path to a rate-sheet (.csv):").ask()
+    csvpath="./data/daily_rate_sheet.csv"
     csvpath = Path(csvpath)
+    print(f"The ratio data sheet is updated daily and you can find it in this location:{csvpath}")
+
     if not csvpath.exists():
         sys.exit(f"Oops! Can't find this path: {csvpath}")
 
@@ -99,6 +103,10 @@ def find_qualifying_loans(bank_data, credit_score, debt, income, loan, home_valu
 
     print(f"Found {len(bank_data_filtered)} qualifying loans")
 
+    if len(bank_data_filtered) == 0:
+        print(f"Given the informatio you provided, there are no offers avalible for you")
+        sys.exit()
+
     return bank_data_filtered
 
 
@@ -112,7 +120,9 @@ def save_qualifying_loans(qualifying_loans):
     # YOUR CODE HERE!
     csvpath = questionary.text("Enter a file path to a output file (.csv):").ask()
     csvpath = Path(csvpath)
-    save_csv(csvpath, qualifying_loans)
+    isdir = os.path.isdir(csvpath)
+    print(isdir)
+    save_csv(csvpath,qualifying_loans)
 
 def run():
     """The main function for running the script."""
