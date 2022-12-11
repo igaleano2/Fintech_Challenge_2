@@ -28,3 +28,16 @@ def load_csv(csvpath):
         for row in csvreader:
             data.append(row)
     return data
+
+
+def save_csv(csvpath, data, header = None):
+    """Writes data from the list of lists to the CSV file.
+    it also adds the header information if avalible
+    
+    """
+    with open(csvpath, 'w', newline='') as csvfile:
+        csvwriter = csv.writer(csvfile, delimiter = ',')
+        if header:
+            csvwriter.writerow(header)
+        for row in data:
+            csvwriter.writerow(row)
