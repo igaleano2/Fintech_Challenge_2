@@ -35,6 +35,8 @@ def save_csv(csvpath, data, header = None):
     it also adds the header information if avalible
     
     """
+    header = ["Financial Institution", "Max Loan Amount", "Max Loan To Value", "Max Debt to Income Ratio", "Minumum Credit Score","APR Offered"]
+
     with open(csvpath, 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile, delimiter = ',')
         if header:

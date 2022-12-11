@@ -120,8 +120,12 @@ def save_qualifying_loans(qualifying_loans):
     # YOUR CODE HERE!
     csvpath = questionary.text("Enter a file path to a output file (.csv):").ask()
     csvpath = Path(csvpath)
-    isdir = os.path.isdir(csvpath)
-    print(isdir)
+    #it verifies if the path and file are correct, right now it works if we are rewriting an output file
+    #I will keep looking on how to only check if the path is correct, not the file
+    isfile = os.path.isfile(csvpath)
+    if isfile is False:
+        csvpath = questionary.text("Enter a correct file path ().csv):").ask()
+    #print(isdir)
     save_csv(csvpath,qualifying_loans)
 
 def run():
